@@ -121,15 +121,6 @@
                 },
                 {
                     "foreground": "p:main-foreground",
-                    "background": "p:main-background",                    
-                    "invert_powerline": true,
-                    "leading_diamond": "\ue0b2",
-                    "style": "diamond",
-                    "template": "\uf85a CPU: {{ round .PhysicalPercentUsed .Precision }}% <#111111>\ue0b2</>",
-                    "type": "sysinfo"
-                },
-                {
-                    "foreground": "p:main-foreground",
                     "background": "p:main-background",
                     "invert_powerline": true,
                     "leading_diamond": "\ue0b2",
