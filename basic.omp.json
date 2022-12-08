@@ -8,13 +8,8 @@
         "main-background": "#0b399c",
         "git-modified": "#f1680c",
         "git-diverged": "#FF4500",
-        "git-ahead": "#B388FF",
-        "git-behind": "#B388FF",
-        "red": "#FF0000",
-        "green": "#00FF00",
-        "blue": "#0000FF",
-        "white": "#FFFFFF",
-        "black": "#111111"
+        "git-ahead": "#5f0eeb",
+        "git-behind": "#5f0eeb"
     },
     "blocks": [
         {
@@ -35,21 +30,42 @@
             "newline": true,
             "segments": [
                 {
-                    "foreground": "#3A86FF",
-                    "style": "plain",
-                    "template": "{{ if .WSL }}WSL at {{ end }}{{.Icon}} ",
+                    "foreground": "p:main-foreground",
+                    "background": "p:main-background",
+                    "style": "diamond",
+                    "trailing_diamond": "\ue0b0",
+                    "template": "{{ if .WSL }}WSL at {{else}} {{ end }}{{.Icon}} ",
                     "type": "os"
                 },
                 {
-                    "template": "  {{.PWD}}",
-                    "type": "path",
-                    "style": "powerline",
-                    "powerline_symbol": "\uE0B0",
                     "foreground": "p:main-foreground",
                     "background": "p:main-background",
+                    "leading_diamond": "<transparent,p:main-background>\ue0b0</>",
+                    "trailing_diamond": "\ue0b0",
+                    "style": "diamond",
+                    "template": "[\uf0e7]",
+                    "type": "root"
+                },
+                {
+                    "foreground": "p:main-foreground",
+                    "background": "p:main-background",
+                    "leading_diamond": "<transparent,p:main-background>\ue0b0</>",
+                    "trailing_diamond": "\ue0b0",
                     "properties": {
-                        "style": "full"
-                    }
+                        "style": "agnoster_full",
+                        "home_icon": "\uf015 ",
+                        "mapped_locations": {
+                            "C:/Program Files (x86)/Steam":"\uf9d2 ",
+                            "C:/Windows":"\uf17a ",
+                            "~/onedrive":"\uf8c9 ",
+                            "~/appdata/roaming": "appdata",
+                            "~/appdata/local": "localappdata",
+                            "~/source/repos": "\uf1c9 "
+                        }
+                    },
+                    "template": "  {{ .Path }} ",
+                    "type": "path",
+                    "style": "diamond"                    
                 },
                 {
                     "background": "p:main-background",
@@ -60,27 +76,40 @@
                         "{{ if gt .Behind 0 }}p:git-behind{{ end }}"
                     ],
                     "foreground": "p:main-foreground",
-                    "powerline_symbol": "\ue0b0",
                     "properties": {
                         "branch_icon": "\ue0a0",
                         "fetch_status": true,
                         "fetch_upstream_icon": true
                     },
                     "style": "powerline",
+                    "powerline_symbol": "\ue0b0",
                     "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }} ",
                     "type": "git"
+                },
+                {
+                    "foreground": "p:main-foreground",
+                    "background": "p:main-background",
+                    "leading_diamond": "<transparent,p:main-background>\ue0b0</>",
+                    "properties": {
+                        "style": "roundrock",
+                        "threshold": 0
+                    },
+                    "style": "diamond",
+                    "template": " {{ .FormattedMs }} ",
+                    "trailing_diamond": "\ue0b4",
+                    "type": "executiontime"
                 }
             ]
         },
         {
             "type": "prompt",
             "alignment": "right",
+            "overflow": "break",
             "segments": [
                 {
                     "style": "diamond",
                     "type": "battery",
-                    "invert_powerline": true,
-                    "leading_diamond": "\ue0b2",
+                    "leading_diamond": "\ue0b6",
                     "foreground": "p:main-foreground",
                     "background": "p:main-background",
                     "template": " {{ if not .Error }}{{ .Icon }}{{ .Percentage }}{{ end }}{{ .Error }}% <#111111>\ue0b2</>",
@@ -91,25 +120,45 @@
                     }
                 },
                 {
-                    "type": "wakatime",
-                    "style": "diamond",
-                    "leading_diamond": "\ue0b2",
+                    "foreground": "p:main-foreground",
+                    "background": "p:main-background",                    
                     "invert_powerline": true,
+                    "leading_diamond": "\ue0b2",
+                    "style": "diamond",
+                    "template": "\uf85a CPU: {{ round .PhysicalPercentUsed .Precision }}% <#111111>\ue0b2</>",
+                    "type": "sysinfo"
+                },
+                {
                     "foreground": "p:main-foreground",
                     "background": "p:main-background",
+                    "invert_powerline": true,
+                    "leading_diamond": "\ue0b2",
+                    "style": "diamond",
+                    "template": "RAM: {{ (div ((sub .PhysicalTotalMemory .PhysicalFreeMemory)|float64) 1000000000.0) }}/{{ (div .PhysicalTotalMemory 1000000000.0) }}GB \uf85a <#111111>\ue0b2</>",
+                    "type": "sysinfo"
+                },
+                {
+                    "type": "ytm",
+                    "style": "diamond",
+                    "invert_powerline": true,
+                    "leading_diamond": "\ue0b2",
+                    "foreground": "p:main-foreground",
+                    "background": "p:main-background",
+                    "template":"{{ .Icon }}{{ if ne .Status \"stopped\" }}{{ .Artist }} - {{ .Track }}{{ end }} <#111111>\ue0b2</>",
                     "properties": {
-                        "apikey": "",
-                        "cache_timeout": 10,
-                        "http_timeout": 20
+                        "playing_icon": "\uE602 ",
+                        "paused_icon": "\uF8E3 ",
+                        "stopped_icon": "\uF04D "
                     }
                 },
                 {
                     "foreground": "p:main-foreground",
                     "background": "p:main-background",
+                    "invert_powerline": true,
                     "leading_diamond": "\ue0b2",
                     "trailing_diamond": "\ue0b4",
                     "properties": {
-                        "time_format": "_2,15:04"
+                        "time_format": "Monday 2 Jan 15:04"
                     },
                     "style": "diamond",
                     "template": " \uf5ef {{ .CurrentDate | date .Format }}",
