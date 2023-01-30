@@ -120,15 +120,6 @@
                     }
                 },
                 {
-                    "foreground": "p:main-foreground",
-                    "background": "p:main-background",
-                    "invert_powerline": true,
-                    "leading_diamond": "\ue0b2",
-                    "style": "diamond",
-                    "template": "RAM: {{ (div ((sub .PhysicalTotalMemory .PhysicalFreeMemory)|float64) 1000000000.0) }}/{{ (div .PhysicalTotalMemory 1000000000.0) }}GB \uf85a <transparent,p:main-background>\ue0b2</>",
-                    "type": "sysinfo"
-                },
-                {
                     "type": "ytm",
                     "style": "diamond",
                     "invert_powerline": true,
