@@ -85,9 +85,13 @@
             "branch_icon": "\ue0a0",
             "cache_duration": "none",
             "fetch_status": true,
-            "fetch_upstream_icon": true,
-            "folders": ["~/source/repos>"]
+            "fetch_upstream_icon": true
           },
+          "include_folders": [
+            "~/source/repos/.*",
+            "~/source/github/.*",
+            "~/OhMyPosh-Theme"
+          ],
           "template": " {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }} ",
           "foreground": "p:main-foreground",
           "powerline_symbol": "\ue0b0",
